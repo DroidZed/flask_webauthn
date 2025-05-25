@@ -1,0 +1,13 @@
+[project]
+name = "flask-passkey-test"
+version = "0.1.0"
+description = "Flask Backend Implementation of the WebAuthn Standard"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "flask>=3.1.1",
+    "flask-openapi3[async,dotenv,email,swagger,yaml]>=4.1.0",
+    "orjson>=3.10.18",
+    "python-dotenv>=1.1.0",
+    "webauthn>=2.5.2",
+]

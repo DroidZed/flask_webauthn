@@ -1,0 +1,317 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Passkey API",
+    "version": "0.0.0"
+  },
+  "paths": {
+    "/passkey/register-passkey": {
+      "post": {
+        "tags": [
+          "Passkey"
+        ],
+        "summary": "Generate register passkey options",
+        "operationId": "passkey_register_passkey_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserEntity"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "422": {
+            "description": "Unprocessable Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ValidationErrorModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/passkey/login-passkey": {
+      "post": {
+        "tags": [
+          "Passkey"
+        ],
+        "summary": "Generate login passkey options",
+        "operationId": "passkey_login_passkey_post",
+        "responses": {}
+      }
+    },
+    "/passkey/verify-login-passkey": {
+      "post": {
+        "tags": [
+          "Passkey"
+        ],
+        "summary": "Verify login passkey options",
+        "operationId": "passkey_verify_login_passkey_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PasskeyVerifModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "422": {
+            "description": "Unprocessable Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ValidationErrorModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/passkey/verify-register-passkey": {
+      "post": {
+        "tags": [
+          "Passkey"
+        ],
+        "summary": "Verify register passkey options",
+        "operationId": "passkey_verify_register_passkey_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PasskeyVerifModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "422": {
+            "description": "Unprocessable Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ValidationErrorModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserEntity": {
+        "title": "UserEntity",
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "title": "User Id",
+            "type": "string",
+            "default": ""
+          },
+          "username": {
+            "title": "Username",
+            "type": "string",
+            "default": ""
+          },
+          "email": {
+            "title": "Email",
+            "type": "string",
+            "default": ""
+          },
+          "password": {
+            "title": "Password",
+            "type": "string",
+            "default": ""
+          }
+        }
+      },
+      "PasskeyVerifModel": {
+        "title": "PasskeyVerifModel",
+        "required": [
+          "credential"
+        ],
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "title": "User Id",
+            "type": "string",
+            "default": ""
+          },
+          "credential": {
+            "$ref": "#/components/schemas/PKCredentialObj"
+          },
+          "expected_challenge": {
+            "title": "Expected Challenge",
+            "type": "string",
+            "default": ""
+          }
+        }
+      },
+      "PKCredentialObj": {
+        "title": "PKCredentialObj",
+        "required": [
+          "response",
+          "clientExtensionResults"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "default": ""
+          },
+          "rawId": {
+            "title": "Rawid",
+            "type": "string",
+            "default": ""
+          },
+          "response": {
+            "$ref": "#/components/schemas/PKResponseObj"
+          },
+          "type": {
+            "title": "Type",
+            "type": "string",
+            "default": ""
+          },
+          "clientExtensionResults": {
+            "title": "Clientextensionresults",
+            "type": "object",
+            "additionalProperties": true
+          },
+          "authenticatorAttachment": {
+            "title": "Authenticatorattachment",
+            "type": "string",
+            "default": ""
+          }
+        }
+      },
+      "PKResponseObj": {
+        "title": "PKResponseObj",
+        "type": "object",
+        "properties": {
+          "attestationObject": {
+            "title": "Attestationobject",
+            "type": "string",
+            "default": ""
+          },
+          "clientDataJSON": {
+            "title": "Clientdatajson",
+            "type": "string",
+            "default": ""
+          },
+          "transports": {
+            "title": "Transports",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "authenticatorData": {
+            "title": "Authenticatordata",
+            "type": "string",
+            "default": ""
+          },
+          "signature": {
+            "title": "Signature",
+            "type": "string",
+            "default": ""
+          },
+          "userHandle": {
+            "title": "Userhandle",
+            "type": "string",
+            "default": ""
+          }
+        }
+      },
+      "ValidationErrorModel": {
+        "title": "ValidationErrorModel",
+        "type": "object",
+        "properties": {
+          "loc": {
+            "title": "Location",
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "the error's location as a list. ",
+            "default": null
+          },
+          "msg": {
+            "title": "Message",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "a computer-readable identifier of the error type.",
+            "default": null
+          },
+          "type_": {
+            "title": "Error Type",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "a human readable explanation of the error.",
+            "default": null
+          },
+          "ctx": {
+            "title": "Error context",
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": true
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "an optional object which contains values required to render the error message.",
+            "default": null
+          }
+        }
+      }
+    },
+    "securitySchemes": null
+  },
+  "tags": [
+    {
+      "name": "Passkey"
+    }
+  ]
+}
