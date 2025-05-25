@@ -79,7 +79,7 @@ It's composed of different classes to make it easier to just pass around as dict
 from pydantic import BaseModel, Field
 
 
-class PKResponseObj(BaseModel):
+class PKResponse(BaseModel):
     attestationObject: str = Field(default="")
     clientDataJSON: str = Field(default="")
     transports: list[str] = Field(default_factory=list)
@@ -88,17 +88,17 @@ class PKResponseObj(BaseModel):
     userHandle: str = Field(default="")
 
 
-class PKCredentialObj(BaseModel):
+class PKCredential(BaseModel):
     id: str = Field(default="")
     rawId: str = Field(default="")
-    response: PKResponseObj
+    response: PKResponse
     type: str = Field(default="")
     clientExtensionResults: dict
     authenticatorAttachment: str = Field(default="")
 
 class PasskeyVerifModel(BaseModel):
-    user_id: str = Field(default="")
-    credential: PKCredentialObj
+    user_id: str = Field(default="") # You may want to ommit the user_id from here and extract it from the incoming request after the user has been signed in. 
+    credential: PKCredential
     expected_challenge: str = Field(default="")
 ````
 
